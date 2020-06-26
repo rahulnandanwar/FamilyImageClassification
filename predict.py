@@ -17,40 +17,34 @@ class objClassification:
 
     def predictionObj(self):
         # load model
-        model = load_model('model_family.h5')
+        model = load_model('mymodel_VggNet.h5')
 
         # summarize model
         #model.summary()
         imagename = self.filename
-        test_image = image.load_img(imagename, target_size = (64, 64))
+        test_image = image.load_img(imagename, target_size = (224,224))
         test_image = image.img_to_array(test_image)
         test_image = np.expand_dims(test_image, axis = 0)
         result = model.predict(test_image)
+        result = np.argmax(result)
 
-        if result[0][0] == 1:
+        if result == 0:
+            prediction = 'Alexa Device'
+        elif result == 1:
+            prediction = 'Anup'
+        elif result == 2:
+            prediction = 'Mug'
+        elif result == 3:
             prediction = 'Papa'
-        elif result[0][1] == 1:
+        elif result == 4:
+            prediction = 'Pradip'
+        elif result == 5:
             prediction = 'Rahul'
-        elif result[0][2] == 1:
+        elif result == 6:
             prediction = 'Shubham'
-        elif result[0][3] == 1:
+        elif result == 7:
+            prediction = 'Tejas'
+        elif result == 8:
             prediction = 'Mummy'
-        # elif result[0][4] == 1:
-        #     prediction = 'Mouse'
-        # elif result[0][5] == 1:
-        #     prediction = 'Mug'
-        # elif result[0][6] == 1:
-        #     prediction = 'Pradip Shirke'
-        # elif result[0][7] == 1:
-        #     prediction = 'Rahul Nandanwar'
-        # elif result[0][8] == 1:
-        #     prediction = 'Shubham Nandanwar'
-        # elif result[0][9] == 1:
-        #     prediction = 'Spects'
-        # elif result[0][10] == 1:
-        #     prediction = 'Tejas Patil'
-        # elif result[0][11] == 1:
-        #     prediction = 'Mummy'
         return [{"image": prediction}]
-
 
